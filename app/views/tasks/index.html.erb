@@ -1,40 +1,41 @@
 <p id="notice"><%= notice %></p>
-<h1>To Do List</h1>
-
-<table class="table table-bordered">
-  <tbody>
-  <tr><%= render 'form_task' %></tr>
-    <% @tasks.each do |task| %>
-      <% if task.completed? %>
-        <tr class="table-secondary">
-          <td class="col-1">
-            <%= form_for(task) do |form| %>
-              <%= form.text_field :content, type:'hidden' %>
-              <%= form.check_box :completed, :checked => false, :style => 'visibility: hidden'%>
-              <button type="submit"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
-            <% end %>
-          </td>
-          <td class="col-10"><strike><%= link_to task.content, edit_task_path(task) %></strike></td>
-          <td class="col-1"><%= link_to 'Delete', task, class:"btn btn-danger text-light", method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% else %>
-        <tr>
-          <td class="col-1">
-            <%= form_for(task) do |form| %>
-              <%= form.text_field :content, type:'hidden' %>
-              <%= form.check_box :completed, :checked => true, :style => 'visibility: hidden'%>
-              <%= button_tag type: 'submit', class: "button my-button", id: "complete-button" do %>
-                <i class="fa fa-circle" aria-hidden="true"></i>
+<div class="col-6 offset-3">
+  <h1>To Do List</h1>
+  <table class="table table-bordered">
+    <tbody>
+      <tr><%= render 'form_task' %></tr>
+      <% @tasks.each do |task| %>
+        <% if task.completed? %>
+          <tr class="table-secondary">
+            <td class="col-1">
+              <%= form_for(task) do |form| %>
+                <%= form.text_field :content, type:'hidden' %>
+                <%= form.check_box :completed, :checked => false, :style => 'visibility: hidden'%>
+                <button type="submit"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
               <% end %>
-            <% end %>
-          </td>
-          <td class="col-10"><%= link_to task.content, edit_task_path(task) %></td>
-          <td class="col-1"><%= link_to 'Delete', task, class:"btn btn-danger text-light", method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
+            </td>
+            <td class="col-10"><strike><%= link_to task.content, edit_task_path(task) %></strike></td>
+            <td class="col-1"><%= link_to 'Delete', task, class:"btn btn-danger text-light", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% else %>
+          <tr>
+            <td class="col-1">
+              <%= form_for(task) do |form| %>
+                <%= form.text_field :content, type:'hidden' %>
+                <%= form.check_box :completed, :checked => true, :style => 'visibility: hidden'%>
+                <%= button_tag type: 'submit', class: "button my-button", id: "complete-button" do %>
+                  <i class="fa fa-circle" aria-hidden="true"></i>
+                <% end %>
+              <% end %>
+            </td>
+            <td class="col-10"><%= link_to task.content, edit_task_path(task) %></td>
+            <td class="col-1"><%= link_to 'Delete', task, class:"btn btn-danger text-light", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
-<br>
-<%= link_to 'Delete Completed Tasks', index_delete_completed_tasks_path, data: { confirm: 'Are you sure?' } %>
-<%= link_to 'Delete All Tasks', index_delete_all_tasks_path, data: { confirm: 'Are you sure?' } %>
+    </tbody>
+  </table>
+  <br>
+  <%= link_to 'Delete Completed Tasks', index_delete_completed_tasks_path, data: { confirm: 'Are you sure?' } %>
+  <%= link_to 'Delete All Tasks', index_delete_all_tasks_path, data: { confirm: 'Are you sure?' } %>
+</div>
