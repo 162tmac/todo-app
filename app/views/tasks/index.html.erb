@@ -1,7 +1,9 @@
 <p id="notice"><%= notice %></p>
 <h1>To Do List</h1>
+
 <table class="table table-bordered">
   <tbody>
+  <tr><%= render 'form_task' %></tr>
     <% @tasks.each do |task| %>
       <% if task.completed? %>
         <tr class="table-secondary">
@@ -34,4 +36,5 @@
   </tbody>
 </table>
 <br>
-<%= link_to 'New Task', new_task_path %>
+<%= link_to 'Delete Completed Tasks', index_delete_completed_tasks_path, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Delete All Tasks', index_delete_all_tasks_path, data: { confirm: 'Are you sure?' } %>
