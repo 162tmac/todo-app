@@ -1,41 +1,46 @@
-<p id="notice"><%= notice %></p>
-<div class="col-6 offset-3">
+<div class="col-6 offset-3 text-center bg-light p-5 rounded-3">
   <h1>To Do List</h1>
-  <table class="table table-bordered">
+  <table class="table bg-white border">
     <tbody>
       <tr><%= render 'form_task' %></tr>
       <% @tasks.each do |task| %>
         <% if task.completed? %>
-          <tr class="table-secondary">
+          <tr class="text-justify align-middle bg-light">
             <td class="col-1">
               <%= form_for(task) do |form| %>
                 <%= form.text_field :content, type:'hidden' %>
-                <%= form.check_box :completed, :checked => false, :style => 'visibility: hidden'%>
-                <button type="submit"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
+                <%= form.check_box :completed, :checked => false, :class => 'd-none' %>
+                <button type="submit" class="btn btn-lg text-secondary border-none"><i class="fa fa-check-circle" aria-hidden="true"></i></button>
               <% end %>
             </td>
-            <td class="col-10"><strike><%= link_to task.content, edit_task_path(task) %></strike></td>
-            <td class="col-1"><%= link_to 'Delete', task, class:"btn btn-danger text-light", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td class="col-9"><strike><%= form_for(task) do |form| %>
+                  <%= form.text_field :content, :value => task.content, :disabled => true, class:"form-control border-0 bg-light" %>
+                  <%= form.check_box :completed, :checked => true, :class => 'd-none' %>
+                <% end %></strike></td>
+            <td class="col-2"><%= link_to 'X', task, class:"btn btn-danger btn-sm text-light", method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% else %>
-          <tr>
+          <tr class="text-justify align-middle">
             <td class="col-1">
               <%= form_for(task) do |form| %>
                 <%= form.text_field :content, type:'hidden' %>
-                <%= form.check_box :completed, :checked => true, :style => 'visibility: hidden'%>
-                <%= button_tag type: 'submit', class: "button my-button", id: "complete-button" do %>
-                  <i class="fa fa-circle" aria-hidden="true"></i>
-                <% end %>
+                <%= form.check_box :completed, :checked => true, autocomplete: "off", :class => 'd-none' %>
+                <button type="submit" class="btn btn-lg text-secondary shadow-none"><i class="fa fa-circle" aria-hidden="true"></i></button>
               <% end %>
             </td>
-            <td class="col-10"><%= link_to task.content, edit_task_path(task) %></td>
-            <td class="col-1"><%= link_to 'Delete', task, class:"btn btn-danger text-light", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td class="col-9">
+              <%= form_for(task) do |form| %>
+                <%= form.text_field :content, :value => task.content, class:"form-control border-0" %>
+                <%= form.check_box :completed, :checked => false, :class => 'd-none' %>
+              <% end %>
+            </td>
+            <td class="col-2"><%= link_to 'X', task, class:"btn btn-danger btn-sm text-light", method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
       <% end %>
     </tbody>
   </table>
   <br>
-  <%= link_to 'Delete Completed Tasks', index_delete_completed_tasks_path, data: { confirm: 'Are you sure?' } %>
+  <%= link_to 'Delete Completed Tasks', index_delete_completed_tasks_path, data: { confirm: 'Are you sure?' } %> | 
   <%= link_to 'Delete All Tasks', index_delete_all_tasks_path, data: { confirm: 'Are you sure?' } %>
 </div>
